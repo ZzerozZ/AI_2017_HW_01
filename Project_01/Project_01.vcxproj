@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{CBFF8079-C27D-4F50-8098-F90B634C436E}</ProjectGuid>
-    <RootNamespace>AI_2017_HW_01</RootNamespace>
+    <ProjectGuid>{C7A7441B-06E9-4E5F-85AE-CB5DE2820223}</ProjectGuid>
+    <RootNamespace>Project_01</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -111,6 +111,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="helper.cpp" />
+    <ClCompile Include="node.cpp" />
+    <ClCompile Include="run.cpp" />
+    <ClCompile Include="search.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="helper.h" />
+    <ClInclude Include="node.h" />
+    <ClInclude Include="search.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
