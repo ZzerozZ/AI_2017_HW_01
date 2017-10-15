@@ -120,24 +120,31 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_
 	//Find min 
 	int min_index = min_of_next_node_list(options);
 
+	//Add new options from node children:
 	for (int i = 0; i < root->children.size(); i++)
 	{
+		///Add new node to node-list of min-option:
 		options.at(min_index).node.push_back(root->children.at(i));
-
+		///Get cost to new option:
 		int cost = options.at(min_index).cost + root->distances_to_child.at(i);
 
 		/*if (root->children.at(i)->value == goal_index)
 		{
 			return root->children.at(i)->path;
 		}*/
+		///Add option from children to options list:
 		options.push_back(NextNode(options.at(min_index).node, cost));
 
+		///Remove last node for next loop:
 		options.at(min_index).node.pop_back();
 	}
 
+	//Remove option of this node:
 	options.erase(options.begin() + min_index);
 
+	//Find new min-index: 
 	min_index = min_of_next_node_list(options);
 
+	//Recursive with node have min index:
 	return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, node_list, options, step_data);
 }
