@@ -1,13 +1,15 @@
 #pragma once
 #include <vector>
+#include "node.h"
+
 using namespace std;
 
 struct NextNode
 {
-	vector<int> value;
+	vector<Node*> node;
 	int cost;
 
-	NextNode(vector<int> _value, int _cost) : value(_value), cost(_cost)
+	NextNode(vector<Node*> _value, int _cost) : node(_value), cost(_cost)
 	{
 	}
 };

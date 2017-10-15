@@ -47,7 +47,7 @@ vector<int> depth_first_search(Node *root, int goal_index, vector<int> &step_dat
 	//If this node is leaf of tree, return empty list:
 	if (root->children.empty())
 		return vector<int>();
-
+	                                                                                                                                                               
 	//Recursive depth_first_search with any children of this node:
 	for (int i = 0; i < root->children.size(); i++)
 	{
@@ -104,37 +104,40 @@ vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_
 }
 
 
-
-//PHẦN NÀY ĐANG CODE NÊN CHƯA COMMENT RÕ RÀNG:
-
-/*Uniform-cost search*/
+/*Uniform-cost search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed
+*/
 vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_list, vector<NextNode> &options, vector<int>& step_data)
 {
+	//Add root value to step list:
 	step_data.push_back(root->value);
 
 	//If this node is goal, return the path:
 	if (root->value == goal_index)
 		return root->path;
 
+	//Find min 
 	int min_index = min_of_next_node_list(options);
 
 	for (int i = 0; i < root->children.size(); i++)
 	{
-		options.at(min_index).value.push_back(root->children.at(i)->value);
+		options.at(min_index).node.push_back(root->children.at(i));
+
 		int cost = options.at(min_index).cost + root->distances_to_child.at(i);
 
 		/*if (root->children.at(i)->value == goal_index)
 		{
 			return root->children.at(i)->path;
 		}*/
-		options.push_back(NextNode(options.at(min_index).value, cost));
+		options.push_back(NextNode(options.at(min_index).node, cost));
 
-		options.at(min_index).value.pop_back();
+		options.at(min_index).node.pop_back();
 	}
 
 	options.erase(options.begin() + min_index);
 
 	min_index = min_of_next_node_list(options);
 
-	return uniform_cost_search(node_list.at(options.at(min_index).value.at(options.at(min_index).value.size() - 1)), goal_index, node_list, options, step_data);
+	return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, node_list, options, step_data);
 }
