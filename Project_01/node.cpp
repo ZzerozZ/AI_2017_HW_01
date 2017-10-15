@@ -1,9 +1,7 @@
 #include "node.h"
 
-#include "node.h"
 
-
-
+/*Create new node from input file and save it on node list*/
 bool create_nodes(string input_file, vector<Node*> &node_list, vector<int> &heuristic_values, int &start_index, int &goal_index)
 {
 	//Open input file:

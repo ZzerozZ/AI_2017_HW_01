@@ -2,4 +2,7 @@
 #include "node.h"
 #include "helper.h"
 
-Node* get_node(int value, vector<Node*> node_list, vector<int> path);
+/*
+Get new node from node list and start position(root_value)
+*/
+Node* get_node(int root_value, vector<Node*> node_list, vector<int> path);
