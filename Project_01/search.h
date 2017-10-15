@@ -1,6 +1,9 @@
 #pragma once
 #include "node.h"
 #include "helper.h"
+using namespace std;
+
+
 
 /*
 Get new node from node list and start position(root_value)
@@ -20,3 +23,8 @@ Breadth-first search
 - step_data will be contain value of any node which browsed
 */
 vector<int> breadth_first_search(Node *root, int goal_index, vector<int> &step_data);
+
+/*
+Uniform-cost search
+*/
+vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_list, vector<NextNode> &options, vector<int>& step_data);

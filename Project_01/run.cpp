@@ -13,8 +13,8 @@ int main()
 	create_nodes(path, node_list, heu_val, start, goal);
 
 	Node *root = get_node(start, node_list, path_list);
-
-	vector<int> search = breadth_first_search(root, goal, steps);
+	vector<NextNode> options({ NextNode(vector<int>(), 0) });
+	vector<int> search = uniform_cost_search(root, goal, node_list, options, steps);
 
 	return 0;
 }

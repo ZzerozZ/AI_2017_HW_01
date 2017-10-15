@@ -13,3 +13,17 @@ bool is_exist_in_list(int val, vector<int> list)
 
 	return false;
 }
+
+
+/*Find index of min value*/
+int min_of_next_node_list(vector<NextNode> list)
+{
+	int min = 0;
+	for (int i = 1; i < list.size(); i++)
+	{
+		if (list.at(i).cost < list.at(min).cost)
+			min = i;
+	}
+
+	return min;
+}
