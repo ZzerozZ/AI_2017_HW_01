@@ -29,7 +29,10 @@ bool create_nodes(string input_file, vector<Node*> &node_list, vector<int> &heur
 	{
 		fin >> itemp;
 		if (itemp > 0)
+		{
 			node_list.at(i / vertexs)->children.push_back(node_list.at(i % vertexs));
+			node_list.at(i / vertexs)->distances_to_child.push_back(itemp);
+		}
 	}
 
 	//Get heuristic values:

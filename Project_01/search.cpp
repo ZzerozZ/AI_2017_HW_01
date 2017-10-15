@@ -18,6 +18,8 @@ Node * get_node(int root_value, vector<Node*> node_list, vector<int> path)
 		{
 			///Add root value to the path of child:
 			path.push_back(root_value);
+			///Add distance from root to child:
+			node->distances_to_child.push_back(temp->distances_to_child.at(i));
 			///Create new node and add it to children list:
 			node->children.push_back(get_node(temp->children.at(i)->value, node_list, path));
 			///Remove last value for next loop:
