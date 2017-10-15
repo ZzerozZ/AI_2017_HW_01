@@ -28,3 +28,75 @@ Node * get_node(int root_value, vector<Node*> node_list, vector<int> path)
 	//Return temp node:
 	return node;
 }
+
+
+/*Depth-first search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed*/
+vector<int> depth_first_search(Node *root, int goal_index, vector<int> &step_data)
+{
+	//Add root value to step list:
+	step_data.push_back(root->value);
+
+	//If this node is goal, return the path:
+	if (root->value == goal_index)
+		return root->path;
+
+	//If this node is leaf of tree, return empty list:
+	if (root->children.empty())
+		return vector<int>();
+
+	//Recursive depth_first_search with any children of this node:
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		vector<int> temp = depth_first_search(root->children.at(i), goal_index, step_data);
+		///When temp isn't empty(goal value found), return temp: 
+		if (!temp.empty())
+			return temp;
+	}
+
+	//If the search failed, return empty list:
+	return vector<int>();
+}
+
+
+
+/*Breadth-first search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed*/
+vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_data)
+{
+	//If root is tree root(haven't parent), add this value to step_data:
+	if(root->path.empty())
+		step_data.push_back(root->value);
+
+	//If this node is goal, return the path:
+	if (root->value == goal_index)
+		return root->path;
+
+	//Search in all children:
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		///Save the browsed-node value:
+		step_data.push_back(root->children.at(i)->value);
+
+		///If this child is goal, return:
+		if (root->children.at(i)->value == goal_index)
+			return root->children.at(i)->path;
+	}
+
+	//Recursive breadth_first_search with any children of this node:
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		for (int j = 0; j < root->children.at(i)->children.size(); j++)
+		{
+			vector<int> temp = breadth_first_search(root->children.at(i), goal_index, step_data);
+			///When temp isn't empty(goal value found), return temp: 
+			if (!temp.empty())
+				return temp;
+		}
+	}
+
+	//If the search failed, return empty list:
+	return vector<int>();
+}
