@@ -30,16 +30,29 @@ int min_of_next_node_list(vector<NextNode> list)
 
 
 /*Order the Node list by heuristic value*/
-void sort_list(vector<Node*> &node_list, vector<int> heuristic_value)
+void sort_list(vector<Node*> &node_list, vector<int> heuristic_value, bool is_include_cost)
 {
 	for (int i = 0; i < node_list.size(); i++)
 	{
 		for (int j = i + 1; j < node_list.size(); j++)
 		{
-			if (heuristic_value.at(node_list.at(i)->value) > heuristic_value.at(node_list.at(j)->value))
+			if (is_include_cost)
 			{
-				swap(node_list[i], node_list[j]);
+				if (heuristic_value.at(node_list.at(i)->value) + node_list.at(i)->cost > heuristic_value.at(node_list.at(j)->value) + node_list.at(j)->cost)
+				{
+					swap(node_list[i], node_list[j]);
+				}
+			}
+			else
+			{
+				if (heuristic_value.at(node_list.at(i)->value) > heuristic_value.at(node_list.at(j)->value))
+				{
+					swap(node_list[i], node_list[j]);
+				}
 			}
 		}
 	}
 }
+
+
+

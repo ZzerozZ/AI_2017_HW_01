@@ -12,9 +12,9 @@ int main()
 
 	create_nodes(path, node_list, heu_val, start, goal);
 
-	Node *root = get_node(start, node_list, path_list);
+	Node *root = get_node(start, node_list, 0, path_list);
 	vector<NextNode> options({ NextNode(vector<Node*>(), 0) });
-	vector<int> search = greedy_best_first_search(root, goal, heu_val, steps);
+	vector<int> search = a_star_search(root, goal, heu_val, steps);
 
 	return 0;
 }

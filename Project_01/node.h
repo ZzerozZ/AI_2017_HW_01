@@ -14,6 +14,8 @@ struct Node
 {
 	int value;/*Value of node*/
 	vector<Node*> children;/*Children of node in graph/tree*/
+
+	int cost;/*Coat from root to this node*/
 	vector<int> distances_to_child;/*Distance to any child in children list*/
 	vector<int> path;/*Path from root node to this node*/
 

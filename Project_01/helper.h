@@ -30,4 +30,6 @@ int min_of_next_node_list(vector<NextNode> list);
 /*
 Order the Node list by heuristic value
 */
-void sort_list(vector<Node*> &node_list, vector<int> heuristic_value);
+void sort_list(vector<Node*> &node_list, vector<int> heuristic_value, bool is_include_cost = false);
+
+

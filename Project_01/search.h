@@ -8,7 +8,7 @@ using namespace std;
 /*
 Get new node from node list and start position(root_value)
 */
-Node* get_node(int root_value, vector<Node*> node_list, vector<int> path);
+Node* get_node(int root_value, vector<Node*> node_list, int _cost, vector<int> path);
 
 /*
 Depth-first search

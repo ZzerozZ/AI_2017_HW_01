@@ -2,13 +2,16 @@
 
 
 /*Get new node from node list and start position(root_value)*/
-Node * get_node(int root_value, vector<Node*> node_list, vector<int> path)
+Node * get_node(int root_value, vector<Node*> node_list, int _cost, vector<int> path)
 {
 	Node *node = new Node(root_value);/*Tempolary node*/
 	Node *temp = node_list.at(root_value);/*Root*/
 
 	///Set node's path:
 	node->path = path;
+
+	///Set node's cost:
+	node->cost = _cost;
 
 	//Get children list:
 	for (int i = 0; i < temp->children.size(); i++)
@@ -21,7 +24,7 @@ Node * get_node(int root_value, vector<Node*> node_list, vector<int> path)
 			///Add distance from root to child:
 			node->distances_to_child.push_back(temp->distances_to_child.at(i));
 			///Create new node and add it to children list:
-			node->children.push_back(get_node(temp->children.at(i)->value, node_list, path));
+			node->children.push_back(get_node(temp->children.at(i)->value, node_list, _cost + temp->distances_to_child.at(i), path));
 			///Remove last value for next loop:
 			path.pop_back();
 		}
@@ -170,7 +173,7 @@ vector<int> greedy_best_first_search(Node * root, int goal_index, vector<int> he
 	//Children list order by heuristic value of any children: 
 	sort_list(root->children, heuristic_value);
 
-	////Recursive depth_first_search with any children of this node which ascension sorted:
+	//Recursive depth_first_search with any children of this node which ascension sorted:
 	for (int i = 0; i < root->children.size(); i++)
 	{
 		vector<int> temp = greedy_best_first_search(root->children.at(i), goal_index, heuristic_value, step_data);
@@ -195,6 +198,22 @@ vector<int> a_star_search(Node * root, int goal_index, vector<int> heuristic_val
 	//If this node is goal, return the path:
 	if (root->value == goal_index)
 		return root->path;
+
+	//If this node is leaf of tree, return empty list:
+	if (root->children.empty())
+		return vector<int>();
+
+	//Children list order by heuristic value of any children: 
+	sort_list(root->children, heuristic_value, true);
+
+	//Recursive depth_first_search with any children of this node which ascension sorted:
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		vector<int> temp = a_star_search(root->children.at(i), goal_index, heuristic_value, step_data);
+		///When temp isn't empty(goal value found), return temp: 
+		if (!temp.empty())
+			return temp;
+	}
 
 	//If the search failed, return empty list:
 	return vector<int>();
