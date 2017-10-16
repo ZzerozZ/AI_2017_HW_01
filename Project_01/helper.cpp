@@ -27,3 +27,19 @@ int min_of_next_node_list(vector<NextNode> list)
 
 	return min;
 }
+
+
+/*Order the Node list by heuristic value*/
+void sort_list(vector<Node*> &node_list, vector<int> heuristic_value)
+{
+	for (int i = 0; i < node_list.size(); i++)
+	{
+		for (int j = i + 1; j < node_list.size(); j++)
+		{
+			if (heuristic_value.at(node_list.at(i)->value) > heuristic_value.at(node_list.at(j)->value))
+			{
+				swap(node_list[i], node_list[j]);
+			}
+		}
+	}
+}

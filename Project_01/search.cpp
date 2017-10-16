@@ -104,11 +104,12 @@ vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_
 }
 
 
+
 /*Uniform-cost search
 - Return value is the path to goal, not include goal value
 - step_data will be contain value of any node which browsed
 */
-vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_list, vector<NextNode> &options, vector<int>& step_data)
+vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &options, vector<int>& step_data)
 {
 	//Add root value to step list:
 	step_data.push_back(root->value);
@@ -146,5 +147,57 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_
 	min_index = min_of_next_node_list(options);
 
 	//Recursive with node have min index:
-	return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, node_list, options, step_data);
+	return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, options, step_data);
 }
+
+
+/*Greedy best-first search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed*/
+vector<int> greedy_best_first_search(Node * root, int goal_index, vector<int> heuristic_value, vector<int> &step_data)
+{
+	//Add root value to step list:
+	step_data.push_back(root->value);
+
+	//If this node is goal, return the path:
+	if (root->value == goal_index)
+		return root->path;
+
+	//If this node is leaf of tree, return empty list:
+	if (root->children.empty())
+		return vector<int>();
+
+	//Children list order by heuristic value of any children: 
+	sort_list(root->children, heuristic_value);
+
+	////Recursive depth_first_search with any children of this node which ascension sorted:
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		vector<int> temp = greedy_best_first_search(root->children.at(i), goal_index, heuristic_value, step_data);
+		///When temp isn't empty(goal value found), return temp: 
+		if (!temp.empty())
+			return temp;
+	}
+
+	//If the search failed, return empty list:
+	return vector<int>();
+}
+
+
+/*A star search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed*/
+vector<int> a_star_search(Node * root, int goal_index, vector<int> heuristic_value, vector<int>& step_data)
+{
+	//Add root value to step list:
+	step_data.push_back(root->value);
+
+	//If this node is goal, return the path:
+	if (root->value == goal_index)
+		return root->path;
+
+	//If the search failed, return empty list:
+	return vector<int>();
+}
+
+

@@ -14,7 +14,7 @@ int main()
 
 	Node *root = get_node(start, node_list, path_list);
 	vector<NextNode> options({ NextNode(vector<Node*>(), 0) });
-	vector<int> search = uniform_cost_search(root, goal, node_list, options, steps);
+	vector<int> search = greedy_best_first_search(root, goal, heu_val, steps);
 
 	return 0;
 }

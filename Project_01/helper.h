@@ -25,3 +25,9 @@ bool is_exist_in_list(int val, vector<int> list);
 Find index of min value
 */
 int min_of_next_node_list(vector<NextNode> list);
+
+
+/*
+Order the Node list by heuristic value
+*/
+void sort_list(vector<Node*> &node_list, vector<int> heuristic_value);

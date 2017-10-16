@@ -29,4 +29,20 @@ Uniform-cost search
 - Return value is the path to goal, not include goal value
 - step_data will be contain value of any node which browsed
 */
-vector<int> uniform_cost_search(Node * root, int goal_index, vector<Node*> node_list, vector<NextNode> &options, vector<int>& step_data);
+vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &options, vector<int>& step_data);
+
+
+/*
+Greedy best-first search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed
+*/
+vector<int> greedy_best_first_search(Node *root, int goal_index, vector<int> heuristic_value, vector<int> &step_data);
+
+
+/*
+A star search
+- Return value is the path to goal, not include goal value
+- step_data will be contain value of any node which browsed
+*/
+vector<int> a_star_search(Node *root, int goal_index, vector<int> heuristic_value, vector<int> &step_data);
