@@ -71,39 +71,52 @@ vector<int> depth_first_search(Node *root, int goal_index, vector<int> &step_dat
 - step_data will be contain value of any node which browsed*/
 vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_data)
 {
-	//If root is tree root(haven't parent), add this value to step_data:
-	if(root->path.empty())
-		step_data.push_back(root->value);
+	//Add root value to step_data:
+	step_data.push_back(root->value);
 
 	//If this node is goal, return the path:
 	if (root->value == goal_index)
 		return root->path;
 
-	//Search in all children:
+	//Define temporary list:
+	vector<Node*> children;
+	vector<Node*> temp_children;
+
+	//Add all node in level 1 of tree:
 	for (int i = 0; i < root->children.size(); i++)
 	{
-		///Save the browsed-node value:
-		step_data.push_back(root->children.at(i)->value);
-
-		///If this child is goal, return:
-		if (root->children.at(i)->value == goal_index)
-			return root->children.at(i)->path;
+		children.push_back(root->children.at(i));
 	}
 
-	//Recursive breadth_first_search with any children of this node:
-	for (int i = 0; i < root->children.size(); i++)
+	//Check any child in children list: return if exist goal, if not, add children of child to temporary list:
+	while (children.size() > 0)
 	{
-		for (int j = 0; j < root->children.at(i)->children.size(); j++)
+		for (int i = 0; i < children.size(); i++)
 		{
-			vector<int> temp = breadth_first_search(root->children.at(i), goal_index, step_data);
-			///When temp isn't empty(goal value found), return temp: 
-			if (!temp.empty())
-				return temp;
+			///Add node-in-process to steps list:
+			step_data.push_back(children.at(i)->value);
+
+			///Return if node is Goal:
+			if (children.at(i)->value == goal_index)
+				return children.at(i)->path;
+
+			///Add children of child to temporary list:
+			for (int j = 0; j < children.at(i)->children.size(); j++)
+			{
+				temp_children.push_back(children.at(i)->children.at(j));
+			}
 		}
+
+		///Update children list for next loop:
+		children = temp_children;
+		///Clear temporary list for next loop:
+		temp_children.clear();
 	}
 
 	//If the search failed, return empty list:
 	return vector<int>();
+
+
 }
 
 
@@ -121,7 +134,7 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &o
 	if (root->value == goal_index)
 		return root->path;
 
-	//Find min 
+	//Find min:
 	int min_index = min_of_next_node_list(options);
 
 	//Add new options from node children:

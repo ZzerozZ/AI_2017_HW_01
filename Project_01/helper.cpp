@@ -54,5 +54,25 @@ void sort_list(vector<Node*> &node_list, vector<int> heuristic_value, bool is_in
 	}
 }
 
+/*Print list of path and list of steps to output file*/
+void print(string output, vector<int> path, vector<int> steps)
+{
+	fstream fout(output, ios::out);
+
+	for each (int var in path)
+	{
+		fout << var << '\t';
+	}
+
+	fout << endl;
+
+	for each (int var in steps)
+	{
+		fout << var << '\t';
+	}
+
+	fout.close();
+}
+
 
 

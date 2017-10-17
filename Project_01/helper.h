@@ -33,3 +33,7 @@ Order the Node list by heuristic value
 void sort_list(vector<Node*> &node_list, vector<int> heuristic_value, bool is_include_cost = false);
 
 
+/*
+Print list of path and list of steps to output file
+*/
+void print(string output, vector<int> path, vector<int> steps);
