@@ -5,7 +5,9 @@ using namespace std;
 struct Point;
 struct Line;
 struct Equation;
-struct Space;
+struct Map;
+enum LastMove;
+
 
 struct Point
 {
@@ -25,9 +27,11 @@ struct Line
 	Line(Point p1, Point p2):start(p1), end(p2)
 	{}
 
+	/*Get equation which include start and end*/
 	Equation get_equation();
 };
 
+/*Hàm số bậc nhất: y = ax + b*/
 struct Equation
 {
 	int a;
@@ -38,7 +42,7 @@ struct Equation
 	}
 };
 
-struct Space
+struct Map
 {
 	int height;
 	int width;
@@ -48,7 +52,16 @@ struct Space
 	vector<Line> wall_list;
 
 
-	Space(int _height, int _width, Point start, Point goal, vector<Line> walls) :height(_height), width(_width), start_position(start), goal_position(goal), wall_list(walls)
+	Map(int _height, int _width, Point start, Point goal, vector<Line> walls) :height(_height), width(_width), start_position(start), goal_position(goal), wall_list(walls)
 	{
 	}
+};
+
+/*Hướng di chuyển gần đây nhất*/
+enum LastMove
+{
+	horizontal,
+	vertical,
+	left_crossover,
+	right_crossover
 };

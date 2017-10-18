@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	Space space = create_space("input.txt");
+	Map space = create_map("input.txt");
 
 	return 0;
 }

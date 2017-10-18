@@ -5,4 +5,5 @@
 
 using namespace std;
 
-Space create_space(string input_file);
+Map create_map(string input_file);
+

@@ -112,11 +112,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="file_processing.cpp" />
+    <ClCompile Include="processing.cpp" />
     <ClCompile Include="run.cpp" />
     <ClCompile Include="structure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="file_processing.h" />
+    <ClInclude Include="processing.h" />
     <ClInclude Include="structure.h" />
   </ItemGroup>
   <ItemGroup>
