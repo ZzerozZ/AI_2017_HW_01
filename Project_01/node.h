@@ -19,8 +19,7 @@ struct Node
 	vector<int> distances_to_child;/*Distance to any child in children list*/
 	vector<int> path;/*Path from root node to this node*/
 
-
-	//Constructor:
+					 //Constructor:
 	Node(int _value)
 	{
 		value = _value;

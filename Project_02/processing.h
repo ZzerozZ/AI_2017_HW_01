@@ -9,6 +9,7 @@ Hàm lấy giao điểm hai đường thẳng
 */
 Point get_intersection(Equation e1, Equation e2);
 
+
 /*
 Hàm đếm số lần "đụng tường" nếu đi thẳng từ A đến B
 - wall_list lấy từ Map().wall_list
@@ -31,7 +32,7 @@ vector<Point> get_intersection_point(Point A, Equation e);
 
 
 /*
-Tạo ra 3 hoặc 4 phương trình đường thẳng đi qua điểm A
+Tạo ra 2 phương trình đường chéo đi qua điểm A
 - Trả về một danh sách Equation
 - Không trả về đường vừa đi để đến A
 - Tham số last_move lưu đường vừa đi dạng enum LastMove(gồm: horizontal, vertical, left_crossover, right_crossover)
@@ -50,7 +51,7 @@ Tìm điểm kế tiếp trên đường đi đến đích
 - Nếu từ A có thể đi thẳng đến G thì thực hiện di chuyển A->G
 - Nếu không trả về điểm tiếp theo sẽ đến
 */
-Point next_point(Point A);
+Point next_point(Point A, LastMove last_move);
 
 
 /*

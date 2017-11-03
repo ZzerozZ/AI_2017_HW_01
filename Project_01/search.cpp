@@ -7,7 +7,7 @@ Node * get_node(int root_value, vector<Node*> node_list, int _cost, vector<int> 
 	Node *node = new Node(root_value);/*Tempolary node*/
 	Node *temp = node_list.at(root_value);/*Root*/
 
-	///Set node's path:
+										  ///Set node's path:
 	node->path = path;
 
 	///Set node's cost:
@@ -40,6 +40,10 @@ Node * get_node(int root_value, vector<Node*> node_list, int _cost, vector<int> 
 - step_data will be contain value of any node which browsed*/
 vector<int> depth_first_search(Node *root, int goal_index, vector<int> &step_data)
 {
+	//If this node was extended, skip this:
+	if (is_exist_in_list(root->value, step_data))
+		return vector<int>();
+
 	//Add root value to step list:
 	step_data.push_back(root->value);
 
@@ -50,7 +54,7 @@ vector<int> depth_first_search(Node *root, int goal_index, vector<int> &step_dat
 	//If this node is leaf of tree, return empty list:
 	if (root->children.empty())
 		return vector<int>();
-	                                                                                                                                                               
+
 	//Recursive depth_first_search with any children of this node:
 	for (int i = 0; i < root->children.size(); i++)
 	{
@@ -93,17 +97,21 @@ vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_
 	{
 		for (int i = 0; i < children.size(); i++)
 		{
-			///Add node-in-process to steps list:
-			step_data.push_back(children.at(i)->value);
-
-			///Return if node is Goal:
-			if (children.at(i)->value == goal_index)
-				return children.at(i)->path;
-
-			///Add children of child to temporary list:
-			for (int j = 0; j < children.at(i)->children.size(); j++)
+			if (!is_exist_in_list(children.at(i)->value, step_data))
 			{
-				temp_children.push_back(children.at(i)->children.at(j));
+				///Add node-in-process to steps list:
+				step_data.push_back(children.at(i)->value);
+
+				///Return if node is Goal:
+				if (children.at(i)->value == goal_index)
+					return children.at(i)->path;
+
+				///Add children of child to temporary list:
+				for (int j = 0; j < children.at(i)->children.size(); j++)
+				{
+					//if(is_exist_in_list(children.at(i)->children.at(j)->value, step_data))
+					temp_children.push_back(children.at(i)->children.at(j));
+				}
 			}
 		}
 
@@ -115,8 +123,6 @@ vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_
 
 	//If the search failed, return empty list:
 	return vector<int>();
-
-
 }
 
 
@@ -127,6 +133,9 @@ vector<int> breadth_first_search(Node * root, int goal_index, vector<int>& step_
 */
 vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &options, vector<int>& step_data)
 {
+	if (is_exist_in_list(root->value, step_data))
+		return vector<int>();
+
 	//Add root value to step list:
 	step_data.push_back(root->value);
 
@@ -137,6 +146,7 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &o
 	//Find min:
 	int min_index = min_of_next_node_list(options);
 
+
 	//Add new options from node children:
 	for (int i = 0; i < root->children.size(); i++)
 	{
@@ -145,10 +155,6 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &o
 		///Get cost to new option:
 		int cost = options.at(min_index).cost + root->distances_to_child.at(i);
 
-		/*if (root->children.at(i)->value == goal_index)
-		{
-			return root->children.at(i)->path;
-		}*/
 		///Add option from children to options list:
 		options.push_back(NextNode(options.at(min_index).node, cost));
 
@@ -156,14 +162,28 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &o
 		options.at(min_index).node.pop_back();
 	}
 
+	//Add root value to step list:
+	//if(options.at(min_index).node.size() != 0)
+	//	step_data.push_back(options.at(min_index).node.at(options.at(min_index).node.size() - 1)->value);
 	//Remove option of this node:
 	options.erase(options.begin() + min_index);
 
 	//Find new min-index: 
 	min_index = min_of_next_node_list(options);
 
+
 	//Recursive with node have min index:
-	return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, options, step_data);
+	vector<int> result = uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, options, step_data);
+	//If result is not empty, return this:
+	if (!result.empty())
+		return result;
+	//If not, delete current smallest-distance node and re-find in other items in queue:
+	else
+	{
+		options.erase(options.begin() + min_index);
+		min_index = min_of_next_node_list(options);
+		return uniform_cost_search(options.at(min_index).node.at(options.at(min_index).node.size() - 1), goal_index, options, step_data);
+	}
 }
 
 
@@ -172,6 +192,10 @@ vector<int> uniform_cost_search(Node * root, int goal_index, vector<NextNode> &o
 - step_data will be contain value of any node which browsed*/
 vector<int> greedy_best_first_search(Node * root, int goal_index, vector<int> heuristic_value, vector<int> &step_data)
 {
+	//If this node was extended, skip this:
+	if (is_exist_in_list(root->value, step_data))
+		return vector<int>();
+
 	//Add root value to step list:
 	step_data.push_back(root->value);
 
@@ -205,6 +229,14 @@ vector<int> greedy_best_first_search(Node * root, int goal_index, vector<int> he
 - step_data will be contain value of any node which browsed*/
 vector<int> a_star_search(Node * root, int goal_index, vector<int> heuristic_value, vector<int>& step_data)
 {
+	//If this node was extended, skip this:
+	if (is_exist_in_list(root->value, step_data))
+		return vector<int>();
+
+	//If this node was extended, skip this:
+	if (is_exist_in_list(root->value, step_data))
+		return vector<int>();
+
 	//Add root value to step list:
 	step_data.push_back(root->value);
 
@@ -231,5 +263,3 @@ vector<int> a_star_search(Node * root, int goal_index, vector<int> heuristic_val
 	//If the search failed, return empty list:
 	return vector<int>();
 }
-
-

@@ -47,4 +47,3 @@ bool create_nodes(string input_file, vector<Node*> &node_list, vector<int> &heur
 
 	return true;
 }
-

@@ -63,5 +63,6 @@ enum LastMove
 	horizontal,
 	vertical,
 	left_crossover,
-	right_crossover
+	right_crossover,
+	other
 };

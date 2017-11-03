@@ -3,6 +3,7 @@
 
 int main()
 {
+	//Temporary variable: 
 	vector<Node*> node_list;
 	vector<int> heuristic_value;
 	vector<int> path_list;
@@ -10,6 +11,7 @@ int main()
 	int start = 0, goal = 0;
 	string input_file = "input.txt";
 
+	//Create node list:
 	create_nodes(input_file, node_list, heuristic_value, start, goal);
 	Node *root = get_node(start, node_list, 0, path_list);
 	vector<int> search;
